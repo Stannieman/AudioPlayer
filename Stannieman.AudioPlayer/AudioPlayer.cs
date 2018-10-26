@@ -22,7 +22,7 @@ namespace Stannieman.AudioPlayer
         private WaveStream _waveStream;
         private string _trackId;
         private bool _stoppedExplicitly;
-		private float _volume;
+		private float _volume = 1;
 		private bool _isMute;
 
         // Variables for position reporting
