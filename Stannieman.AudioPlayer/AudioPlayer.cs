@@ -22,6 +22,8 @@ namespace Stannieman.AudioPlayer
         private WaveStream _waveStream;
         private string _trackId;
         private bool _stoppedExplicitly;
+		private float _volume = 1;
+		private bool _isMute;
 
         // Variables for position reporting
         private Timer _positionReportTimer;
@@ -30,14 +32,41 @@ namespace Stannieman.AudioPlayer
         private bool _paused;
         private bool _doNotReportPosition;
 
-        #endregion
+		#endregion
 
-        #region Events
+		#region Setters and Getters
 
-        /// <summary>
-        /// Indicates that a track finished playing.
-        /// </summary>
-        public event EventHandler<FinishedStoppedPlayingEventArgs> FinishedPlaying;
+		/// <summary>
+		/// Set or Get: The Audio volume;
+		/// </summary>
+		public float Volume
+		{
+			get => _volume;
+			set => _player.Volume = _volume = value;
+		}
+
+		/// <summary>
+		/// Set or Get: The Audio volume;
+		/// </summary>
+		public bool IsMute
+		{
+			get => _isMute;
+			set
+			{
+				_isMute = value;
+				//if is mute the audio keep playing with volume 0
+				_player.Volume = (_isMute) ? 0 : _volume;
+			}
+		}
+
+		#endregion
+
+		#region Events
+
+		/// <summary>
+		/// Indicates that a track finished playing.
+		/// </summary>
+		public event EventHandler<FinishedStoppedPlayingEventArgs> FinishedPlaying;
 
         /// <summary>
         /// Indicates that a track stopped playing but was not finished.
